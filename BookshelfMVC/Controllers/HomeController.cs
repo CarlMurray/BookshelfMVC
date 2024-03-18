@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using BookshelfMVC.DTO;
+using static System.Random;
 
 namespace BookshelfMVC.Controllers
 {
@@ -31,6 +32,7 @@ namespace BookshelfMVC.Controllers
                 PropertyNameCaseInsensitive = true,
             };
             List<BookDTO> books = JsonSerializer.Deserialize<List<BookDTO>>(dataNode, options);
+            BookDTO[] booksArray = books.ToArray();
             ViewData["Books"] = books;
             return View();
         }

@@ -2,21 +2,28 @@
 @{
     ViewData["Title"] = "Home Page";
     List<BookDTO> books = (List<BookDTO>)ViewData["Books"];
-
+    BookDTO[] shuffledBooks = books.Take(6).ToArray();
+    Random.Shared.Shuffle(shuffledBooks);
 }
 
-<div class="border-2 border-yellow-700 flex justify-center h-52 items-center flex-col">
+<div class="flex justify-center h-64 items-center flex-col">
     <h1 class="text-center text-gray-900 text-3xl font-bold sm:text-5xl">BookShelf</h1>
     <p class="text-center text-gray-700 text-lg">An online tool for managing your reading list with ease.</p>
+    <a class="px-4 py-2 bg-gray-900 border-2 border-gray-900 text-white font-bold text-sm rounded-md hover:bg-gray-700 transition mt-6" href="#">View all books</a>
 </div>
-
-<div class="grid grid-cols-12 border-blue-700 border-4 gap-6 auto-rows-fr">
-    @foreach (BookDTO book in books)
+<span class="flex items-center mb-6 text-sm text-gray-500">
+    <span class="h-px flex-1 bg-black"></span>
+    <span class="px-6">Here's a random selection!</span>
+    <span class="h-px flex-1 bg-black"></span>
+</span>
+<div class="grid grid-cols-12 gap-6 auto-rows-fr mb-8">
+    @foreach (BookDTO book in shuffledBooks)
     {
         <div class="col-span-12 sm:col-span-4 border-2 border-gray-600 rounded-2xl p-6">
 
             <h3 class="text-lg font-bold">@book.Title</h3>
-            <p class="text-xs text-gray-500">By
+            <p class="text-xs text-gray-500">
+                By
                 @foreach (AuthorDTO author in book.Authors)
                 {
                     if (author == book.Authors.Last())
