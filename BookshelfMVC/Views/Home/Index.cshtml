@@ -1,0 +1,35 @@
+﻿@using BookshelfMVC.DTO
+@{
+    ViewData["Title"] = "Home Page";
+    List<BookDTO> books = (List<BookDTO>)ViewData["Books"];
+
+}
+
+<div class="border-2 border-yellow-700 flex justify-center h-52 items-center flex-col">
+    <h1 class="text-center text-gray-900 text-3xl font-bold sm:text-5xl">BookShelf</h1>
+    <p class="text-center text-gray-700 text-lg">An online tool for managing your reading list with ease.</p>
+</div>
+
+<div class="grid grid-cols-12 border-blue-700 border-4 gap-6 auto-rows-fr">
+    @foreach (BookDTO book in books)
+    {
+        <div class="col-span-12 sm:col-span-4 border-2 border-gray-600 rounded-2xl p-6">
+
+            <h3 class="text-lg font-bold">@book.Title</h3>
+            <p class="text-xs text-gray-500">By
+                @foreach (AuthorDTO author in book.Authors)
+                {
+                    if (author == book.Authors.Last())
+                    {
+                        @author.Name
+                    }
+                    else
+                    {
+                        <text>@author.Name, </text>
+                    }
+                }
+            </p>
+
+        </div>
+    }
+</div>

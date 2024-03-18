@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BookshelfMVC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        * {
+            font-size: 1rem;
+            font-family: Arial, ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"
+        }
+    </style>
+</head>
+<body class="flex flex-col justify-between min-h-[100vh]">
+    <header class="bg-white">
+        <div class="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8 border-pink-500 border-2">
+            <a class="block text-teal-600 text-2xl" href="#">
+             Bookshelf
+            </a>
+
+            <div class="flex flex-1 items-center justify-end md:justify-between">
+                <nav aria-label="Global" class="hidden md:block">
+                    <ul class="flex items-center gap-6 text-sm">
+                        <li>
+                            <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Home </a>
+                        </li>
+
+                        <li>
+                            <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Books </a>
+                        </li>
+
+                        <li>
+                            <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Blog </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="flex items-center gap-4">
+                   <partial name="_LoginPartial"/>
+
+                    <button class="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 md:hidden">
+                        <span class="sr-only">Toggle menu</span>
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="h-5 w-5"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke="currentColor"
+                             stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex-1 border-green-500 border-2">
+        <main role="main" class="max-w-screen-xl border-2 mx-auto px-4 sm:px-6 lg:px-8">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="mx-auto flex h-12 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8 border-red-500 border-2">
+        <div class="">
+            &copy; 2024 - BookshelfMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
