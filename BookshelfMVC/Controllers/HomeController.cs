@@ -6,6 +6,9 @@ using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using BookshelfMVC.DTO;
 using static System.Random;
+using BookshelfMVC.Data;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace BookshelfMVC.Controllers
 {
@@ -13,15 +16,26 @@ namespace BookshelfMVC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IHttpClientFactory _clientFactory;
+        private readonly ApplicationDbContext _context;
+        //private readonly HttpContext _httpContext;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, IHttpClientFactory clientFactory)
+        public HomeController(ILogger<HomeController> logger, IHttpClientFactory clientFactory, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _logger = logger;
             _clientFactory = clientFactory;
+            _context = context;
+            //_httpContext = httpContext;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
         {
+            var posts = _context.BlogPosts;
+
+            // FOR TESTING
+            posts.Add(new BlogPostModel { Title = "Test", Content = "Test", Created = DateTime.Now, Updated = DateTime.Now, ApplicationUser = await _userManager.GetUserAsync(HttpContext.User)});
+            
             var httpClient = _clientFactory.CreateClient();
             var response = await httpClient.GetAsync("https://localhost:7108/api/books");
             var responseString = await response.Content.ReadAsStreamAsync();
@@ -34,6 +48,7 @@ namespace BookshelfMVC.Controllers
             List<BookDTO> books = JsonSerializer.Deserialize<List<BookDTO>>(dataNode, options);
             BookDTO[] booksArray = books.ToArray();
             ViewData["Books"] = books;
+            _context.SaveChanges();
             return View();
         }
 
