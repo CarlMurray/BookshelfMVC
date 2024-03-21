@@ -17,7 +17,6 @@ namespace BookshelfMVC.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IHttpClientFactory _clientFactory;
         private readonly ApplicationDbContext _context;
-        //private readonly HttpContext _httpContext;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public HomeController(ILogger<HomeController> logger, IHttpClientFactory clientFactory, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
@@ -25,7 +24,6 @@ namespace BookshelfMVC.Controllers
             _logger = logger;
             _clientFactory = clientFactory;
             _context = context;
-            //_httpContext = httpContext;
             _userManager = userManager;
         }
 

@@ -1,0 +1,26 @@
+﻿@model BookshelfMVC.DTO.BookDTO
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="col-span-12 sm:col-span-4 border-2 border-gray-500 rounded-2xl p-6 hover:scale-[1.02] hover:border-gray-950 bg-white hover:drop-shadow-lg transition ease-in">
+
+    <h3 class="text-lg font-bold">@Model.Title</h3>
+    <p class="text-xs text-gray-500">
+        By
+        @foreach (var author in Model.Authors)
+        {
+            if (author == Model.Authors.Last())
+            {
+                @author.Name
+            }
+            else
+            {
+                <text>@author.Name, </text>
+            }
+        }
+    </p>
+
+</div>

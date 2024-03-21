@@ -19,24 +19,6 @@
 <div class="grid grid-cols-12 gap-6 auto-rows-fr mb-8">
     @foreach (BookDTO book in shuffledBooks)
     {
-        <div class="col-span-12 sm:col-span-4 border-2 border-gray-600 rounded-2xl p-6">
-
-            <h3 class="text-lg font-bold">@book.Title</h3>
-            <p class="text-xs text-gray-500">
-                By
-                @foreach (AuthorDTO author in book.Authors)
-                {
-                    if (author == book.Authors.Last())
-                    {
-                        @author.Name
-                    }
-                    else
-                    {
-                        <text>@author.Name, </text>
-                    }
-                }
-            </p>
-
-        </div>
+        @await Html.PartialAsync("_BookCardComponent", book)
     }
 </div>

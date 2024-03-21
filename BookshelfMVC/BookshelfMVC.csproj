@@ -8,9 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\NewFolder\**" />
     <Compile Remove="wwwroot\lib\**" />
+    <Content Remove="Views\NewFolder\**" />
     <Content Remove="wwwroot\lib\**" />
+    <EmbeddedResource Remove="Views\NewFolder\**" />
     <EmbeddedResource Remove="wwwroot\lib\**" />
+    <None Remove="Views\NewFolder\**" />
     <None Remove="wwwroot\lib\**" />
   </ItemGroup>
 

@@ -1,0 +1,18 @@
+﻿@using BookshelfMVC.DTO
+
+@{
+    var books = (List<BookDTO>)ViewData["Books"];
+}
+
+<span class="flex items-center mb-6 text-sm text-gray-500">
+    <span class="h-px flex-1 bg-black"></span>
+    <span class="px-6">Have a browse!</span>
+    <span class="h-px flex-1 bg-black"></span>
+</span>
+<div class="grid grid-cols-12 gap-6 auto-rows-fr mb-8">
+
+@foreach (var book in books)
+{
+    @await Html.PartialAsync("_BookCardComponent", book)
+}
+</div>
