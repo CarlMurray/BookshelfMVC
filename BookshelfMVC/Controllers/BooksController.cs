@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Nodes;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
+using BookshelfMVC.ViewModels;
+using System.Text;
 
 namespace BookshelfMVC.Controllers
 {
@@ -39,5 +42,35 @@ namespace BookshelfMVC.Controllers
             ViewData["Books"] = books;
             return View(); 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> AddBook()
+        {
+            var httpClient = _clientFactory.CreateClient();
+            var response = await httpClient.GetAsync("https://localhost:7108/api/authors");
+            var responseString = await response.Content.ReadAsStreamAsync();
+            JsonNode responseNode = await JsonNode.ParseAsync(responseString);
+            JsonNode dataNode = responseNode["data"];
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
+            List<AuthorDTO> authors = JsonSerializer.Deserialize<List<AuthorDTO>>(dataNode, options);
+            AuthorDTO[] authorsArray = authors.ToArray();
+            ViewData["Authors"] = authors; 
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddBook(BookDTO book, AuthorDTO author, AuthorBookViewModel model)
+        {
+            var httpClient = _clientFactory.CreateClient();
+            BookCreateDTO postBook = new BookCreateDTO(model.Book.Title, model.Book.Description, model.Book.ISBN, model.Book.PublishDate, model.Book.NumPages, model.AuthorIds);
+            var response = await httpClient.PostAsJsonAsync("https://localhost:7108/api/books", postBook);
+    
+
+   
+            return Ok();
+        }   
     }
 }

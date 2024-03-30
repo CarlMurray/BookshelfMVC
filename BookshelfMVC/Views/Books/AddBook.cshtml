@@ -1,0 +1,67 @@
+﻿@using BookshelfMVC.DTO
+@{
+    @model BookshelfMVC.ViewModels.AuthorBookViewModel
+    var authors = ViewData["Authors"] as List<AuthorDTO>;
+}
+
+<form action="" method="post" class="flex flex-col gap-4 w-1/2">
+    <div class="flex flex-col">
+        <label asp-for=Book.Title></label>
+        <input asp-for="Book.Title" class="border-2 border-black px-2 h-10" />
+    </div>
+
+    <div class="flex flex-col">
+        <label asp-for="Book.Description"></label>
+        <textarea asp-for="Book.Description" class="border-2 border-black px-2 h-10">
+            </textarea>
+    </div>
+
+    <div class="flex justify-between gap-4">
+        <div class="flex flex-col flex-1">
+            <label asp-for="Book.NumPages"></label>
+            <input asp-for="Book.NumPages" class="border-2 border-black px-2 h-10" />
+        </div>
+
+        <div class="flex flex-col flex-1">
+            <label asp-for="Book.PublishDate"></label>
+            <input asp-for="Book.PublishDate" class="border-2 border-black px-2 h-10" type="date" />
+        </div>
+    </div>
+
+    <div class="flex flex-col">
+        <label asp-for="Book.ISBN"></label>
+        <input asp-for="Book.ISBN" class="border-2 border-black px-2 h-10" />
+    </div>
+
+    <fieldset>
+        <legend>Author</legend>
+        <div>
+            <input id="add-new-author-true" type="radio" name="add-new-author" value="true" />
+            <label for="add-new-author-true">Add new author</label>
+        </div>
+        <div>
+            <input id="add-new-author-false" type="radio" name="add-new-author" value="false" checked />
+            <label for="add-new-author-false">Choose existing author</label>
+        </div>
+    </fieldset>
+
+    <div class="flex-col flex">
+        <label asp-for="Author.Name">Author Name(s)</label>
+        <!--<input asp-for="Author.Name" class="border-2 border-black" id="author-text-input" />-->
+
+        <select class="border-2 border-black px-2" id="author-dropdown" asp-for="AuthorIds" size="6">
+            <option value="">Select an author</option>
+            @{
+                foreach (var author in authors.OrderBy(a => a.Name)
+                )
+                {
+                    <option value="@author.Id">@author.Name</option>
+                }
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="border-2 border-black">Add Book</button>
+</form>
+
+<script src="@Url.Content("~/js/add-book.js")"></script>

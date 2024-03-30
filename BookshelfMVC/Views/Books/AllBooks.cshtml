@@ -4,7 +4,7 @@
     var books = (List<BookDTO>)ViewData["Books"];
 }
 <div class="grid grid-cols-12 gap-6 my-8">
-    <a href="#" class="block rounded-md bg-green-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-green-700 sm:col-span-4">Add book</a>
+    <a asp-action="AddBook" asp-controller="Books" class="block rounded-md bg-green-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-green-700 sm:col-span-4">Add book</a>
     <a href="#" class="block rounded-md bg-blue-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 sm:col-span-4">Edit book</a>
     <a href="#" class="block rounded-md bg-red-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-red-700 sm:col-span-4">Delete book</a>
 </div>
