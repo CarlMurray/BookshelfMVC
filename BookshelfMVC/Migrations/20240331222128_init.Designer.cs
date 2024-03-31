@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BookshelfMVC.Data.Migrations
+namespace BookshelfMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240319195130_ApplicationUser")]
-    partial class ApplicationUser
+    [Migration("20240331222128_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,10 +98,8 @@ namespace BookshelfMVC.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ApplicationUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ApplicationUserId1")
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
@@ -122,7 +120,7 @@ namespace BookshelfMVC.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId1");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("BlogPosts");
                 });
@@ -268,7 +266,9 @@ namespace BookshelfMVC.Data.Migrations
                 {
                     b.HasOne("BookshelfMVC.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("BlogPosts")
-                        .HasForeignKey("ApplicationUserId1");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ApplicationUser");
                 });

@@ -8,7 +8,7 @@ namespace BookshelfMVC.Models
     {
         
         [Key][Required]public int Id { get; set; }
-        [Required] public int ApplicationUserId { get; set; }
+        [Required] public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; } = null!;
         [Required][MaxLength(200)]public string Title { get; set; }
         [Required][MaxLength(5000)]public string Content { get; set; }

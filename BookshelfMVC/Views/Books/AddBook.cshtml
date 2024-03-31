@@ -58,8 +58,8 @@
         <label asp-for="Author.Name">Author Name(s)</label>
         <input asp-for="Author.Name" class="input bg-white input-bordered" id="author-text-input" />
 
-        <select class="input bg-white h-36 hidden resize-y input-bordered" id="author-dropdown" asp-for="AuthorIds" size="6">
-            <option value="">Select an author</option>
+        <select class="input bg-white h-36 hidden resize-y input-bordered text-black" id="author-dropdown" asp-for="AuthorIds" size="6">
+            <option value="" disabled>Select an author</option>
             @{
                 foreach (var author in authors.OrderBy(a => a.Name)
                 )

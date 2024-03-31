@@ -1,0 +1,26 @@
+﻿@using BookshelfMVC.ViewModels
+@{
+
+    @model BookshelfMVC.ViewModels.BlogPostViewModel
+    var blogPosts = ViewData["BlogPosts"] as List<BlogPostViewModel>;
+}
+
+<h1 class="text-4xl font-bold text-base-content text-center my-8">Blog</h1>
+<hr class="border-[1px] mb-6 border-base-content"/>
+<div class="flex flex-col gap-4">
+    @foreach (var post in blogPosts)
+    {
+        <div class="card bg-base-300 border-[1px] border-secondary shadow-xl">
+            <div class="card-body">
+                <h2 class="card-title">@post.Title</h2>
+                <p>@post.Content.Substring(0, Math.Min(post.Content.Length, 200))...</p>
+                <p>Published on: @post.Created</p>
+                <p>By: @post.Author</p>
+                <div class="card-actions justify-end">
+                    <button class="btn btn-accent">Read more</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
