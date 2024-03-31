@@ -6,6 +6,8 @@
     <title>@ViewData["Title"] - BookshelfMVC</title>
     <!-- Add Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Add DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.9.0/dist/full.min.css" rel="stylesheet" type="text/css" />
     <!-- Add htmx -->
     <script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
 
@@ -16,10 +18,10 @@
         }
     </style>
 </head>
-<body class="flex flex-col justify-between min-h-[100vh]">
-    <header class="bg-white">
+<body class="flex flex-col justify-between min-h-[100vh] bg-base-100 text-base-content">
+    <header class="bg-base-100">
         <div class="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
-            <a class="block text-gray-900 text-2xl" asp-action="Index" asp-controller="Home">
+            <a class="block text-2xl" asp-action="Index" asp-controller="Home">
              BookShelf
             </a>
 
@@ -27,15 +29,15 @@
                 <nav aria-label="Global" class="hidden md:block">
                     <ul class="flex items-center gap-6 text-sm">
                         <li>
-                            <a class="text-gray-500 transition hover:text-gray-900" asp-action="Index" asp-controller="Home"> Home </a>
+                            <a class="text-base-content transition" asp-action="Index" asp-controller="Home"> Home </a>
                         </li>
 
                         <li>
-                            <a class="text-gray-500 transition hover:text-gray-900" asp-controller="Books" asp-action="AllBooks"> Books </a>
+                            <a class="text-base-content transition" asp-controller="Books" asp-action="AllBooks"> Books </a>
                         </li>
 
                         <li>
-                            <a class="text-gray-500 transition hover:text-gray-900" href="#"> Blog </a>
+                            <a class="text-base-content transition" href="#"> Blog </a>
                         </li>
                     </ul>
                 </nav>

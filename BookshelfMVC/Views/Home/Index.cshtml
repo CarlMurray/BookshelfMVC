@@ -6,15 +6,15 @@
     Random.Shared.Shuffle(shuffledBooks);
 }
 
-<div class="flex justify-center h-64 items-center flex-col">
-    <h1 class="text-center text-gray-900 text-3xl font-bold sm:text-5xl">BookShelf</h1>
-    <p class="text-center text-gray-700 text-lg">An online tool for managing your reading list with ease.</p>
-    <a class="px-4 py-2 bg-gray-900 border-2 border-gray-900 text-white font-bold text-sm rounded-md hover:bg-gray-700 transition mt-6" href="#">View all books</a>
+<div class="flex justify-center h-64 items-center flex-col text-base-content">
+    <h1 class="text-center text-3xl font-bold sm:text-5xl">BookShelf</h1>
+    <p class="text-center text-lg">An online tool for managing your reading list with ease.</p>
+    <a class="btn btn-wide btn-primary mt-6" href="#">View all books</a>
 </div>
-<span class="flex items-center mb-6 text-sm text-gray-500">
-    <span class="h-px flex-1 bg-black"></span>
+<span class="flex items-center mb-6 text-sm">
+    <span class="h-px flex-1 bg-base-content"></span>
     <span class="px-6">Here's a random selection!</span>
-    <span class="h-px flex-1 bg-black"></span>
+    <span class="h-px flex-1 bg-base-content"></span>
 </span>
 <div class="grid grid-cols-12 gap-6 auto-rows-fr mb-8">
     @foreach (BookDTO book in shuffledBooks)
