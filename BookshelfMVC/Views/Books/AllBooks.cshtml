@@ -3,10 +3,39 @@
 @{
     var books = (List<BookDTO>)ViewData["Books"];
 }
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div id="success-message" role="alert" class="alert alert-success fixed bottom-20 left-1/2 -translate-x-1/2  z-20 w-96">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span>@TempData["SuccessMessage"]</span>
+    </div>
+    <script> setTimeout(() => document.getElementById("success-message").remove(), 4000); </script>
+}
+
+<dialog id="edit-book-dialog" class="sm:w-2/3">
+    <div class="relative flex flex-col gap-6 items-center justify-center bg-neutral rounded-xl border-accent border-2 p-20">
+        <h2 id="edit-book-dialog-header" class="text-lg font-bold text-base-content">Choose a book to edit</h2>
+        <form id="edit-book-dialog-form" action="DeleteBook" method="post" class="flex border-2 border-red-500 gap-4">
+            <select name="selected-book" class="select bg-white select-bordered text-black">
+                @foreach (var book in books)
+                {
+                    <option value="@book.Id">@book.Title</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-primary">Go</button>
+        </form>
+        <form method="dialog" class="absolute right-4 top-4">
+            <button class="btn btn-ghost">Close</button>
+        </form>
+    </div>
+
+</dialog>
+
 <div class="grid grid-cols-12 gap-6 my-8">
     <a asp-action="AddBook" asp-controller="Books" class="btn btn-success sm:col-span-4">Add book</a>
-    <a href="#" class="btn btn-info sm:col-span-4">Edit book</a>
-    <a href="#" class="btn btn-error sm:col-span-4">Delete book</a>
+    <button id="edit-book-btn" data-action="edit" class="btn btn-info sm:col-span-4">Edit book</button>
+    <button id="delete-book-btn" data-action="delete" class="btn btn-error sm:col-span-4">Delete book</button>
 </div>
 <span class="flex items-center mb-6 text-sm">
     <span class="h-px flex-1 bg-base-content"></span>
@@ -20,3 +49,5 @@
         @await Html.PartialAsync("_BookCardComponent", book)
     }
 </div>
+
+<script src="~/js/edit-delete-book-dialog.js"></script>

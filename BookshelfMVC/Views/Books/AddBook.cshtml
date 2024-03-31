@@ -6,7 +6,11 @@
 
 @if (TempData["SuccessMessage"] != null)
 {
-    <div id="success-message" class="w-1/2 mx-auto bg-green-200 h-10 border-2 border-green-700 fixed translate-x-1/2 rounded-xl drop-shadow-xl flex items-center justify-center">@TempData["SuccessMessage"]</div>
+    <div id="success-message" role="alert" class="alert alert-success fixed bottom-20 left-1/2 -translate-x-1/2  z-20 w-96">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span>@TempData["SuccessMessage"]</span>
+    </div>
+    <script>setTimeout(() => document.getElementById("success-message").remove(), 4000);</script>
 }
 <h1 class="text-xl font-bold text-base-content mt-6">Add Book</h1>
 <form action="" method="post" class="flex flex-col gap-4 w-1/2 mt-6">

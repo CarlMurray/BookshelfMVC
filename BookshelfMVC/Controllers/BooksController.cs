@@ -85,5 +85,15 @@ namespace BookshelfMVC.Controllers
 
             return RedirectToAction("AddBook");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteBook()
+        {
+            int selectedBookId = Convert.ToInt32(Request.Form["selected-book"]);
+            var httpClient = _clientFactory.CreateClient();
+            var response = await httpClient.DeleteAsync($"https://localhost:7108/api/books/{selectedBookId}");
+            TempData["SuccessMessage"] = "Book deleted successfully!";
+            return RedirectToAction("AllBooks");
+        }
     }
 }
