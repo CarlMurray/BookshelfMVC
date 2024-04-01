@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using BookshelfMVC.DTO;
+using BookshelfMVC.ViewModels;
 
 namespace BookshelfMVC.Data
 {
@@ -19,5 +20,6 @@ namespace BookshelfMVC.Data
             base.OnModelCreating(builder);
         }
         public DbSet<BookshelfMVC.DTO.BookDTO> BookDTO { get; set; } = default!;
+        public DbSet<BookshelfMVC.ViewModels.BlogPostViewModel> BlogPostViewModel { get; set; } = default!;
     }
 }

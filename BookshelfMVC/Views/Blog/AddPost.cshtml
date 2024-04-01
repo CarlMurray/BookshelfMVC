@@ -1,0 +1,36 @@
+﻿@model BookshelfMVC.ViewModels.BlogPostViewModel
+
+@{
+    ViewData["Title"] = "AddPost";
+}
+
+<h1>AddPost</h1>
+
+<hr />
+<div class="">
+    <div class="sm:w-1/2">
+        <form asp-action="AddPost" method="post" class="flex flex-col gap-4">
+            <div asp-validation-summary="ModelOnly" class="text-error"></div>
+            <div class="flex flex-col">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="input bg-white input-outlined" />
+                <span asp-validation-for="Title" class="text-error"></span>
+            </div>
+            <div class="flex flex-col">
+                <label asp-for="Content" class="control-label"></label>
+                <input asp-for="Content" class="input bg-white input-outlined" />
+                <span asp-validation-for="Content" class="text-error"></span>
+            </div>
+            <div class="flex flex-col">
+                <label asp-for="Created" class="control-label"></label>
+                <input asp-for="Created" class="input bg-white input-outlined" />
+                <span asp-validation-for="Created" class="text-error"></span>
+            </div>
+            <div class="flex gap-4">
+                <input type="submit" value="Create" class="btn btn-primary flex-1" />
+                <a asp-action="Index" class="btn btn-ghost flex-1">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+

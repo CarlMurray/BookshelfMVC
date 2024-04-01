@@ -4,6 +4,7 @@ using BookshelfMVC.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using System.Security.Claims;
 
 namespace BookshelfMVC.Controllers
 {
@@ -25,7 +26,7 @@ namespace BookshelfMVC.Controllers
             var blogPostViewModels = new List<BlogPostViewModel>();
             foreach (var post in blogPosts)
             {
-                string authorId = post.ApplicationUserId; 
+                string authorId = post.ApplicationUserId;
                 var author = _context.Users.FirstOrDefault(u => u.Id == authorId).Email;
                 blogPostViewModels.Add(new BlogPostViewModel
                 {
@@ -35,14 +36,14 @@ namespace BookshelfMVC.Controllers
                     Created = post.Created,
                     Author = author
                 });
-                
-                
+
+
             }
             ViewData["BlogPosts"] = blogPostViewModels;
             return View();
         }
 
-        [HttpGet("blog/{id}")]
+        [HttpGet("blog/{id:int}")]
         public ActionResult Post(int id)
         {
             var blogPosts = _context.BlogPosts;
@@ -59,6 +60,30 @@ namespace BookshelfMVC.Controllers
             ViewData["Post"] = blogPostViewModel;
             return View(blogPostViewModel);
         }
+
+        [HttpGet]
+        public ActionResult AddPost() { 
+            return View(); 
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> AddPost(BlogPostViewModel blogPost=null)
+        {
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
+            BlogPostModel blogPostModel = new BlogPostModel()
+            {
+                ApplicationUserId = userId,
+                Title = blogPost.Title,
+                Content = blogPost.Content,
+                Created = DateTime.Now,
+                Updated = DateTime.Now,
+            };
+            _context.BlogPosts.Add(blogPostModel);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");          
+        }
+
 
 
     }
