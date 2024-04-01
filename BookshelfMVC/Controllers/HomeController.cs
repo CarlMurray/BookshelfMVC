@@ -29,11 +29,7 @@ namespace BookshelfMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var posts = _context.BlogPosts;
-
-            // FOR TESTING
-            posts.Add(new BlogPostModel { Title = "Test", Content = "Test", Created = DateTime.Now, Updated = DateTime.Now, ApplicationUser = await _userManager.GetUserAsync(HttpContext.User)});
-            
+ 
             var httpClient = _clientFactory.CreateClient();
             var response = await httpClient.GetAsync("https://localhost:7108/api/books");
             var responseString = await response.Content.ReadAsStreamAsync();

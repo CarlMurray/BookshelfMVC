@@ -1,6 +1,7 @@
 ﻿using BookshelfMVC.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using BookshelfMVC.DTO;
 
 namespace BookshelfMVC.Data
 {
@@ -17,5 +18,6 @@ namespace BookshelfMVC.Data
         {
             base.OnModelCreating(builder);
         }
+        public DbSet<BookshelfMVC.DTO.BookDTO> BookDTO { get; set; } = default!;
     }
 }

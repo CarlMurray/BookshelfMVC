@@ -8,11 +8,15 @@ let action;
 buttons.forEach(button => {
     button.addEventListener('click', function () {
         action = this.getAttribute('data-action');
-        console.log(action);
         let dialogHeader = document.querySelector('#edit-book-dialog-header');
-        dialogHeader.innerText = `Choose a book to ${action}`
         let dialogForm = document.querySelector('#edit-book-dialog-form');
-        dialogForm.setAttribute('action', 'DeleteBook')
+        dialogHeader.innerText = `Choose a book to ${action}`
+        dialogForm.setAttribute('action', `books/${action}Book`)
+        if (action === 'edit') {
+            dialogForm.setAttribute('method', 'get');
+        }
+        else dialogForm.setAttribute('method', 'post');
+
         editBookDialog.showModal();
     });
 }

@@ -16,7 +16,7 @@
 <dialog id="edit-book-dialog" class="sm:w-2/3">
     <div class="relative flex flex-col gap-6 items-center justify-center bg-neutral rounded-xl border-accent border-2 p-20">
         <h2 id="edit-book-dialog-header" class="text-lg font-bold text-base-content">Choose a book to edit</h2>
-        <form id="edit-book-dialog-form" action="DeleteBook" method="post" class="flex border-2 border-red-500 gap-4">
+        <form id="edit-book-dialog-form" action="DeleteBook" method="post" class="flex gap-4">
             <select name="selected-book" class="select bg-white select-bordered text-black">
                 @foreach (var book in books)
                 {
@@ -33,9 +33,9 @@
 </dialog>
 
 <div class="grid grid-cols-12 gap-6 my-8">
-    <a asp-action="AddBook" asp-controller="Books" class="btn btn-success sm:col-span-4">Add book</a>
-    <button id="edit-book-btn" data-action="edit" class="btn btn-info sm:col-span-4">Edit book</button>
-    <button id="delete-book-btn" data-action="delete" class="btn btn-error sm:col-span-4">Delete book</button>
+    <a asp-action="AddBook" asp-controller="Books" class="btn btn-success col-span-4">Add book</a>
+    <button id="edit-book-btn" data-action="edit" class="btn btn-info col-span-4">Edit book</button>
+    <button id="delete-book-btn" data-action="delete" class="btn btn-error col-span-4">Delete book</button>
 </div>
 <span class="flex items-center mb-6 text-sm">
     <span class="h-px flex-1 bg-base-content"></span>

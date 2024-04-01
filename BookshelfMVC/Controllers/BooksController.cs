@@ -8,6 +8,8 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using BookshelfMVC.ViewModels;
 using System.Text;
+using NuGet.Protocol;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BookshelfMVC.Controllers
 {
@@ -26,7 +28,8 @@ namespace BookshelfMVC.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> AllBooks()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
             var httpClient = _clientFactory.CreateClient();
             var response = await httpClient.GetAsync("https://localhost:7108/api/books");
@@ -93,7 +96,63 @@ namespace BookshelfMVC.Controllers
             var httpClient = _clientFactory.CreateClient();
             var response = await httpClient.DeleteAsync($"https://localhost:7108/api/books/{selectedBookId}");
             TempData["SuccessMessage"] = "Book deleted successfully!";
-            return RedirectToAction("AllBooks");
+            return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> EditBook()
+        {
+            var selectedBookId = Request.Query["selected-book"];
+            var httpClient = _clientFactory.CreateClient();
+            var response = await httpClient.GetAsync($"https://localhost:7108/api/books/{selectedBookId}");
+            var content = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive= true };
+            BookDTO book =  JsonSerializer.Deserialize<BookDTO>(content, options);
+            ViewData["Book"] = book;
+            return View(book);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditBook(int bookId)
+        {
+            var httpClient = _clientFactory.CreateClient();
+            bookId = Convert.ToInt32(Request.Query["selected-book"]);
+
+            // Assuming Request.Form.ToJson() serializes the form data into JSON
+            // You might need to use a different method to serialize your form data
+            var jsonData = Request.Form.ToDictionary();
+            BookDTO book = new BookDTO()
+            {
+                Id = bookId,
+                Title = jsonData["book.Title"],
+                Description = jsonData["book.Description"],
+                ISBN = jsonData["book.ISBN"],
+                PublishDate = Convert.ToDateTime(jsonData["book.PublishDate"]),
+                NumPages = Convert.ToInt32(jsonData["book.NumPages"]),
+
+            };
+            
+            
+            //BookDTO book = JsonSerializer.Deserialize<BookDTO>(jsonData);
+
+            // Perform HTTP PUT request to update the book resource
+            var response = await httpClient.PutAsJsonAsync($"https://localhost:7108/api/books/{bookId}", book);
+
+            // Check if the request was successful
+            if (response.IsSuccessStatusCode)
+            {
+                // Redirect to a specific action or route upon successful update
+                // You need to specify the action and controller you want to redirect to
+                TempData["SuccessMessage"] = "Book editted successfully!";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                // Handle the case where the PUT request fails
+                // You may choose to return an error view or take other actions
+                return View("Error");
+            }
+        }
+
     }
 }

@@ -1,0 +1,52 @@
+﻿@using BookshelfMVC.DTO
+
+@{
+    ViewData["Title"] = "EditBook";
+    var book = ViewData["Book"] as BookDTO;
+    
+}
+
+
+<h1 class="text-xl font-bold text-base-content mt-6">Edit Book</h1>
+
+<hr />
+<div class="row">
+    <div class="sm:w-1/2">
+        <form asp-action="EditBook" asp-route-selected-book="@book.Id" class="flex flex-col gap-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@book.Id" />
+            <div class="flex flex-col">
+                <label asp-for="@book.Title" class="control-label"></label>
+                <input asp-for="@book.Title" class="input bg-white border-[1px] border-accent text-black" />
+                <span asp-validation-for="@book.Title" class="text-danger"></span>
+            </div>
+            <div class="flex flex-col">
+                <label asp-for="@book.Description" class="control-label"></label>
+                <input asp-for="@book.Description" class="input bg-white border-[1px] border-accent text-black" />
+                <span asp-validation-for="@book.Description" class="text-danger"></span>
+            </div>
+            <div class="flex flex-col">
+                <label asp-for="@book.ISBN" class="control-label"></label>
+                <input asp-for="@book.ISBN" class="input bg-white border-[1px] border-accent text-black" />
+                <span asp-validation-for="@book.ISBN" class="text-danger"></span>
+            </div>
+            <div class="flex flex-col">
+                <label asp-for="@book.PublishDate" class="control-label"></label>
+                <input asp-for="@book.PublishDate" class="input bg-white border-[1px] border-accent text-black" />
+                <span asp-validation-for="@book.PublishDate" class="text-danger"></span>
+            </div>
+            <div class="flex flex-col">
+                <label asp-for="@book.NumPages" class="control-label"></label>
+                <input asp-for="@book.NumPages" class="input bg-white border-[1px] border-accent text-black" />
+                <span asp-validation-for="@book.NumPages" class="text-danger"></span>
+            </div>
+
+            <div class="flex gap-4">
+                <input type="submit" value="Save" class="btn btn-primary flex-1" />
+                <a asp-action="Index" class="flex-1 btn btn-ghost">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
