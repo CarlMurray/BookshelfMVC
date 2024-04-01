@@ -17,7 +17,7 @@
                 <p>Published on: @post.Created</p>
                 <p>By: @post.Author</p>
                 <div class="card-actions justify-end">
-                    <button class="btn btn-accent">Read more</button>
+                    <a asp-action="Post" asp-controller="Blog" asp-route-id="@post.Id" class="btn btn-accent">Read more</a>
                 </div>
             </div>
         </div>

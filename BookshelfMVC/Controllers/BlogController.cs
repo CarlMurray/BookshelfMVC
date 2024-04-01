@@ -1,7 +1,9 @@
 ﻿using BookshelfMVC.Data;
+using BookshelfMVC.Models;
 using BookshelfMVC.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 
 namespace BookshelfMVC.Controllers
 {
@@ -16,7 +18,8 @@ namespace BookshelfMVC.Controllers
             _logger = logger;
         }
         // GET: BlogController
-        public ActionResult Blog()
+        [HttpGet]
+        public ActionResult Index()
         {
             var blogPosts = _context.BlogPosts;
             var blogPostViewModels = new List<BlogPostViewModel>();
@@ -26,6 +29,7 @@ namespace BookshelfMVC.Controllers
                 var author = _context.Users.FirstOrDefault(u => u.Id == authorId).Email;
                 blogPostViewModels.Add(new BlogPostViewModel
                 {
+                    Id = post.Id,
                     Title = post.Title,
                     Content = post.Content,
                     Created = post.Created,
@@ -36,6 +40,24 @@ namespace BookshelfMVC.Controllers
             }
             ViewData["BlogPosts"] = blogPostViewModels;
             return View();
+        }
+
+        [HttpGet("blog/{id}")]
+        public ActionResult Post(int id)
+        {
+            var blogPosts = _context.BlogPosts;
+            BlogPostModel blogPost = blogPosts.FirstOrDefault(b => b.Id == id);
+            string authorId = blogPost.ApplicationUserId;
+            var author = _context.Users.FirstOrDefault(u => u.Id == authorId).Email;
+            var blogPostViewModel = new BlogPostViewModel
+            {
+                Title = blogPost.Title,
+                Content = blogPost.Content,
+                Created = blogPost.Created,
+                Author = author
+            };
+            ViewData["Post"] = blogPostViewModel;
+            return View(blogPostViewModel);
         }
 
 

@@ -1,0 +1,23 @@
+﻿@using BookshelfMVC.ViewModels
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    BlogPostViewModel post = ViewData["Post"] as BlogPostViewModel;
+}
+
+<div class="mx-auto max-w-[600px] my-8">
+    <h1 class="text-3xl font-bold text-base-content">@post.Title</h1>
+    <hr class="border-[1px] border-base-content my-4" />
+    <div>
+        <p class="text-sm">
+            Date posted: @post.Created.ToString("dd-MM-yyyy")
+        </p>
+        <p class="text-sm">
+            By @post.Author
+        </p>
+    </div>
+    <article class="my-8 leading-loose">
+        @post.Content
+    </article>
+</div>
