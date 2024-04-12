@@ -2,9 +2,7 @@
 using BookshelfMVC.Models;
 using BookshelfMVC.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 using System.Security.Claims;
 
 namespace BookshelfMVC.Controllers
@@ -49,11 +47,12 @@ namespace BookshelfMVC.Controllers
         {
             var blogPosts = _context.BlogPosts;
             BlogPostModel blogPost = blogPosts.FirstOrDefault(b => b.Id == id);
+            if (blogPost == null) return NotFound();
             string authorId = blogPost.ApplicationUserId;
             var author = _context.Users.FirstOrDefault(u => u.Id == authorId).Email;
             var blogPostViewModel = new BlogPostViewModel
             {
-                Id=blogPost.Id,
+                Id = blogPost.Id,
                 Title = blogPost.Title,
                 Content = blogPost.Content,
                 Created = blogPost.Created,
@@ -65,13 +64,14 @@ namespace BookshelfMVC.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult AddPost() { 
-            return View(); 
+        public ActionResult AddPost()
+        {
+            return View();
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> AddPost(BlogPostViewModel blogPost=null)
+        public async Task<ActionResult> AddPost(BlogPostViewModel blogPost = null)
         {
             var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
             BlogPostModel blogPostModel = new BlogPostModel()
@@ -84,7 +84,7 @@ namespace BookshelfMVC.Controllers
             };
             _context.BlogPosts.Add(blogPostModel);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");          
+            return RedirectToAction("Index");
         }
 
         [Authorize]
@@ -101,7 +101,7 @@ namespace BookshelfMVC.Controllers
         [HttpGet]
         public ActionResult EditPost(int id)
         {
-            BlogPostModel blogPost = _context.BlogPosts.Where(b=> b.Id == id).FirstOrDefault();
+            BlogPostModel blogPost = _context.BlogPosts.Where(b => b.Id == id).FirstOrDefault();
             BlogPostViewModel blogPostViewModel = new BlogPostViewModel()
             {
                 Id = blogPost.Id,

@@ -6,8 +6,8 @@ namespace BookshelfMVC.ViewModels
     public class AuthorBookViewModel
     {
         [JsonIgnore]
-        public AuthorDTO Author { get; set; }
-        public BookDTO Book { get; set; }
-        public List<int> AuthorIds { get; set; }
+        public required AuthorDTO Author { get; set; }
+        public required BookDTO Book { get; set; }
+        public required List<int> AuthorIds { get; set; }
     }
 }

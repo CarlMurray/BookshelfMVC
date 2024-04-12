@@ -1,6 +1,5 @@
 using BookshelfMVC.Data;
 using BookshelfMVC.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

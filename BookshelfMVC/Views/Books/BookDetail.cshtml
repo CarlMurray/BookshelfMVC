@@ -1,0 +1,28 @@
+﻿    @using BookshelfMVC.DTO
+@{
+
+    BookDTO book = ViewData["book"] as BookDTO;
+}
+<div>
+    <h1 class="font-bold text-2xl">@book.Title</h1>
+    <h2>
+        @foreach (AuthorDTO a in book.Authors)
+        {
+            if (a == book.Authors.Last())
+            {
+                @a.Name
+            }
+            else
+            {
+                <text>@a.Name,</text>
+            }
+        }
+    </h2>
+    <hr class="my-4" />
+    <p>@book.Description</p>
+    <div class="my-4">
+        <p class="text-xs">ISBN: @book.ISBN</p>
+        <p class="text-xs">@book.NumPages pages</p>
+        <p class="text-xs">Published: @book.PublishDate.ToShortDateString()</p>
+    </div>
+</div>

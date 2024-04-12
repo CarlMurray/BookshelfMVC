@@ -1,14 +1,11 @@
+using BookshelfMVC.Data;
+using BookshelfMVC.DTO;
 using BookshelfMVC.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
-using BookshelfMVC.DTO;
-using static System.Random;
-using BookshelfMVC.Data;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
 
 namespace BookshelfMVC.Controllers
 {
@@ -29,20 +26,20 @@ namespace BookshelfMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
- 
-            var httpClient = _clientFactory.CreateClient();
-            var response = await httpClient.GetAsync("https://localhost:7108/api/books");
-            var responseString = await response.Content.ReadAsStreamAsync();
+
+            HttpClient httpClient = _clientFactory.CreateClient();
+            HttpResponseMessage response = await httpClient.GetAsync("https://localhost:7108/api/books");
+            Stream responseString = await response.Content.ReadAsStreamAsync();
             JsonNode responseNode = await JsonNode.ParseAsync(responseString);
-            JsonNode dataNode = responseNode["data"];            
-            var options = new JsonSerializerOptions
+            JsonNode dataNode = responseNode["data"];
+            JsonSerializerOptions options = new()
             {
                 PropertyNameCaseInsensitive = true,
             };
             List<BookDTO> books = JsonSerializer.Deserialize<List<BookDTO>>(dataNode, options);
-            BookDTO[] booksArray = books.ToArray();
+            _ = books.ToArray();
             ViewData["Books"] = books;
-            _context.SaveChanges();
+            _ = _context.SaveChanges();
             return View();
         }
 

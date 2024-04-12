@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -11,7 +10,7 @@ namespace BookshelfMVC.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "BlogPostViewModel",
                 columns: table => new
                 {
@@ -24,10 +23,10 @@ namespace BookshelfMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BlogPostViewModel", x => x.Id);
+                    _ = table.PrimaryKey("PK_BlogPostViewModel", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "BookDTO",
                 columns: table => new
                 {
@@ -41,10 +40,10 @@ namespace BookshelfMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookDTO", x => x.Id);
+                    _ = table.PrimaryKey("PK_BookDTO", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "AuthorDTO",
                 columns: table => new
                 {
@@ -55,15 +54,15 @@ namespace BookshelfMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AuthorDTO", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_AuthorDTO", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_AuthorDTO_BookDTO_BookDTOId",
                         column: x => x.BookDTOId,
                         principalTable: "BookDTO",
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AuthorDTO_BookDTOId",
                 table: "AuthorDTO",
                 column: "BookDTOId");
@@ -72,13 +71,13 @@ namespace BookshelfMVC.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "AuthorDTO");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "BlogPostViewModel");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "BookDTO");
         }
     }

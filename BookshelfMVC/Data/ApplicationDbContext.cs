@@ -1,8 +1,6 @@
 ﻿using BookshelfMVC.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using BookshelfMVC.DTO;
-using BookshelfMVC.ViewModels;
 
 namespace BookshelfMVC.Data
 {

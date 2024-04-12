@@ -1,15 +1,11 @@
 ﻿using BookshelfMVC.Data;
 using BookshelfMVC.DTO;
 using BookshelfMVC.Models;
+using BookshelfMVC.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json.Nodes;
 using System.Text.Json;
-using Microsoft.AspNetCore.Authorization;
-using BookshelfMVC.ViewModels;
-using System.Text;
-using NuGet.Protocol;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Text.Json.Nodes;
 
 namespace BookshelfMVC.Controllers
 {
@@ -28,7 +24,8 @@ namespace BookshelfMVC.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet]
+
+        [HttpGet("books")]
         public async Task<IActionResult> Index()
         {
             var httpClient = _clientFactory.CreateClient();
@@ -44,6 +41,18 @@ namespace BookshelfMVC.Controllers
             BookDTO[] booksArray = books.ToArray();
             ViewData["Books"] = books;
             return View();
+        }
+
+        [HttpGet("books/{id}")]
+        public async Task<ActionResult> BookDetail(string id)
+        {
+            var httpClient = _clientFactory.CreateClient();
+            var response = await httpClient.GetAsync($"https://localhost:7108/api/books/{id}");
+            var content = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+            BookDTO book = JsonSerializer.Deserialize<BookDTO>(content, options);
+            ViewData["Book"] = book;
+            return View("BookDetail", book);
         }
 
         [HttpGet]
@@ -106,8 +115,8 @@ namespace BookshelfMVC.Controllers
             var httpClient = _clientFactory.CreateClient();
             var response = await httpClient.GetAsync($"https://localhost:7108/api/books/{selectedBookId}");
             var content = await response.Content.ReadAsStringAsync();
-            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive= true };
-            BookDTO book =  JsonSerializer.Deserialize<BookDTO>(content, options);
+            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+            BookDTO book = JsonSerializer.Deserialize<BookDTO>(content, options);
             ViewData["Book"] = book;
             return View(book);
         }
@@ -131,8 +140,8 @@ namespace BookshelfMVC.Controllers
                 NumPages = Convert.ToInt32(jsonData["book.NumPages"]),
 
             };
-            
-            
+
+
             //BookDTO book = JsonSerializer.Deserialize<BookDTO>(jsonData);
 
             // Perform HTTP PUT request to update the book resource
@@ -153,6 +162,9 @@ namespace BookshelfMVC.Controllers
                 return View("Error");
             }
         }
+
+
+
 
     }
 }

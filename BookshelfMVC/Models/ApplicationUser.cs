@@ -4,6 +4,6 @@ namespace BookshelfMVC.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public ICollection<BlogPostModel> BlogPosts { get; } = new List<BlogPostModel>();
+        public ICollection<BlogPostModel> BlogPosts { get; } = [];
     }
 }
