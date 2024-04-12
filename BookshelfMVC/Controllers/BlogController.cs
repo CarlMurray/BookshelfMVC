@@ -1,6 +1,7 @@
 ﻿using BookshelfMVC.Data;
 using BookshelfMVC.Models;
 using BookshelfMVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
@@ -52,6 +53,7 @@ namespace BookshelfMVC.Controllers
             var author = _context.Users.FirstOrDefault(u => u.Id == authorId).Email;
             var blogPostViewModel = new BlogPostViewModel
             {
+                Id=blogPost.Id,
                 Title = blogPost.Title,
                 Content = blogPost.Content,
                 Created = blogPost.Created,
@@ -61,12 +63,13 @@ namespace BookshelfMVC.Controllers
             return View(blogPostViewModel);
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult AddPost() { 
             return View(); 
         }
 
-
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> AddPost(BlogPostViewModel blogPost=null)
         {
@@ -82,6 +85,16 @@ namespace BookshelfMVC.Controllers
             _context.BlogPosts.Add(blogPostModel);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");          
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> DeletePost(int id)
+        {
+            BlogPostModel b = _context.BlogPosts.Where(b => b.Id == id).FirstOrDefault();
+            _context.BlogPosts.Remove(b);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
 
