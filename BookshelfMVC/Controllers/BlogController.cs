@@ -97,7 +97,35 @@ namespace BookshelfMVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
+        [HttpGet]
+        public ActionResult EditPost(int id)
+        {
+            BlogPostModel blogPost = _context.BlogPosts.Where(b=> b.Id == id).FirstOrDefault();
+            BlogPostViewModel blogPostViewModel = new BlogPostViewModel()
+            {
+                Id = blogPost.Id,
+                Title = blogPost.Title,
+                Content = blogPost.Content,
+                Created = DateTime.Now,
 
+            };
+            return View(blogPostViewModel);
+        }
 
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> EditPost()
+        {
+
+            var form = Request.Form;
+            var blogPost = _context.BlogPosts.Where(b => b.Id == Convert.ToInt32(form["Id"])).FirstOrDefault();
+            blogPost.Title = form["Title"];
+            blogPost.Content = form["Content"];
+            blogPost.Created = DateTime.Parse(form["Created"]);
+            blogPost.Updated = DateTime.Now;
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Post", new { id = blogPost.Id });
+        }
     }
 }

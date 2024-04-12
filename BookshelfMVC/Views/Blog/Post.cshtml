@@ -18,7 +18,7 @@
 <div class="mx-auto max-w-[600px] my-8 flex flex-col">
     <div class="self-end grid grid-cols-2 gap-2">
         <button id="delete-post-btn" class="btn-ghost col-span-1 p-2 transition-all">Delete</button>
-        <button id="edit-post-btn" class="btn-ghost col-span-1 p-2 transition-all">Edit</button>
+        <a asp-action="EditPost" asp-controller="Blog" asp-route-id=@post.Id id="edit-post-btn" class="text-center btn-ghost col-span-1 p-2 transition-all">Edit</a>
     </div>
     <h1 class="text-3xl font-bold text-base-content">@post.Title</h1>
     <hr class="border-[1px] border-base-content my-4" />

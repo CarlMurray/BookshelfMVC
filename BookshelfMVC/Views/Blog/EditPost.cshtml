@@ -1,0 +1,44 @@
+﻿@model BookshelfMVC.ViewModels.BlogPostViewModel
+
+@{
+    ViewData["Title"] = "EditPost";
+}
+
+<h1>EditPost</h1>
+
+<h4>BlogPostViewModel</h4>
+<hr />
+<div>
+    <div>
+        <form asp-action="EditPost" class="flex flex-col gap-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="flex flex-col sm:w-1/2">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="input bg-white input-outlined" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="flex flex-col sm:w-1/2">
+                <label asp-for="Content" class="control-label"></label>
+                <textarea asp-for="Content" class="h-[400px] input bg-white input-outlined"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="flex flex-col sm:w-1/2">
+                <label asp-for="Created" class="control-label"></label>
+                <input asp-for="Created" class="input bg-white input-outlined" />
+                <span asp-validation-for="Created" class="text-danger"></span>
+            </div>
+            <div>
+                <input type="submit" value="Save" class="btn btn-primary mr-2" />
+                <a asp-action="Index" class="btn btn-ghost flex-1">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
