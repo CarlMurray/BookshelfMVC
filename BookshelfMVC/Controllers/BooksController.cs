@@ -43,8 +43,8 @@ namespace BookshelfMVC.Controllers
             return View();
         }
 
-        [HttpGet("books/{id}")]
-        public async Task<ActionResult> BookDetail(string id)
+        [HttpGet("books/{id:int}")]
+        public async Task<ActionResult> BookDetail(int id)
         {
             var httpClient = _clientFactory.CreateClient();
             var response = await httpClient.GetAsync($"https://localhost:7108/api/books/{id}");

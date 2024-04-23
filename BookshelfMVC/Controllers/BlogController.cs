@@ -108,6 +108,7 @@ namespace BookshelfMVC.Controllers
                 Title = blogPost.Title,
                 Content = blogPost.Content,
                 Created = DateTime.Now,
+                Author = blogPost.ApplicationUserId
 
             };
             return View(blogPostViewModel);
